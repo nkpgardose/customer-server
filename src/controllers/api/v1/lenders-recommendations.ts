@@ -1,4 +1,4 @@
-import { Request, Response, RequestHandler } from "express-serve-static-core";
+import { Request, Response, } from "express-serve-static-core";
 import { randomUUID, UUID } from "node:crypto";
 
 type FeePayload = {
@@ -24,8 +24,17 @@ const lendersResult: Lenders = [
 ];
 
 /**
- * GET /api/v1/lenders
+ * GET /api/v1/lenders-recommendations
+ * req:
+ *  - loan_details_id
  */
-export function getLenders(req: Request, res: Response): void {
+export function getLendersRecommendations(req: Request, res: Response): void {
+	res.status(200).send(lendersResult);
+}
+
+/**
+ * POST /api/v1/lenders-recommendations
+ */
+export function postLendersRecommendations(req: Request, res: Response): void {
 	res.status(200).send(lendersResult);
 }

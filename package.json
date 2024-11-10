@@ -11,9 +11,12 @@
   "license": "ISC",
   "description": "A customer serving APIs using express and typescript",
   "dependencies": {
+    "@libsql/client": "^0.14.0",
     "compression": "^1.7.5",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "drizzle-orm": "^0.36.1",
     "express": "^4.21.1",
     "helmet": "^8.0.0",
     "morgan": "^1.10.0"
@@ -26,8 +29,10 @@
     "@types/express": "^5.0.0",
     "@types/morgan": "^1.9.9",
     "@types/node": "^22.9.0",
+    "drizzle-kit": "^0.28.0",
     "nodemon": "^3.1.7",
     "ts-node": "^10.9.2",
+    "tsx": "^4.19.2",
     "typescript": "^5.6.3"
   }
 }
