@@ -8,10 +8,28 @@ NOTE: The API above is one of the endpoints.
 
 ### Getting started
 
-It's simple as running the following command:
+To get started, clone the repository and install the dependencies.
 
 ```bash
 $ npm install
+```
+
+#### Setting up local database
+
+The project will generate a local database file in the root directory. The database file is named `local.db`.
+
+To set up the database, run the following command:
+
+```bash
+$ npm run db:push:local # to create, migrate, and push database locally.
+$ npm run db:seed:local # to seed the database locally.
+```
+
+#### Running the server
+
+It's simple as running the following command:
+
+```bash
 $ npm start:dev # for development
 
 # [nodemon] starting `ts-node ./src/index.ts`
@@ -22,8 +40,6 @@ $ npm start:dev # for development
 
 express - to run node server.
 dotenv - package for managing environment variables.
-turso - SQLite for Production.
-libsql - a fork of SQLite optimized for low query latency, making it suitable for global applications.
 drizzle - orm for the database.
 jest - For unit testing.
 

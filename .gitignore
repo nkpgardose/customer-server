@@ -3,3 +3,5 @@
 
 tsconfig.tsbuildinfo
 .env
+
+local.db

@@ -9,9 +9,13 @@ import { createClient } from '@libsql/client'
  * a URL when using Node.js, learn more
  * https://docs.turso.tech/local-development#sqlite
  */
-const client = createClient({
-	url: process.env.TURSO_DATABASE_URL!,
-	authToken: process.env.TURSO_AUTH_TOKEN!,
-})
+const client = createClient(
+	process.env.NODE_ENV === 'development' ? {
+		url: "file:local.db"
+	} : {
+		url: process.env.TURSO_DATABASE_URL!,
+		authToken: process.env.TURSO_AUTH_TOKEN!,
+	}
+)
 
 export const database = drizzle(client)
