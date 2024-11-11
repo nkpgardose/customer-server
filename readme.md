@@ -3,7 +3,9 @@
 > Serving APIs for customer and lender recommendations
 
 To see the funnel and the API running, visit the [dev site](https://customer-funnel.fly.dev/)
+
 To see the APIs, visit the [API dev site](https://customer-server.fly.dev/api/v1/lenders)
+
 NOTE: The API above is one of the endpoints.
 
 ### Getting started
@@ -11,6 +13,7 @@ NOTE: The API above is one of the endpoints.
 To get started, clone the repository and install the dependencies.
 
 ```bash
+$ node -v # v22.6.0+
 $ npm install
 ```
 
@@ -37,11 +40,24 @@ $ npm start:dev # for development
 # Running on port: 3000
 ```
 
+The server will also be using sqlite locally(./local.db).
+
+### Running tests
+
+To run the tests, run the following command:
+
+```bash
+$ npm test
+```
+
 ### Dependencies
 
 express - to run node server.
+
 dotenv - package for managing environment variables.
+
 drizzle - orm for the database.
+
 jest - For unit testing.
 
 
