@@ -23,6 +23,7 @@ To set up the database, run the following command:
 ```bash
 $ npm run db:push:local # to create, migrate, and push database locally.
 $ npm run db:seed:local # to seed the database locally.
+$ npm run db:studio:local # To show interactive UI for the database.
 ```
 
 #### Running the server
@@ -55,8 +56,8 @@ Straight forward API endpoints for the customer and lender recommendations. Usin
 |--------|---------------------------------|-----------------------------------------------------------|------------------------------------------|
 | GET    | /api/v1/lenders-recommendations | Give a list of recommended lenders' offers                | customer_id, loan_details_id             |
 | POST   | /api/v1/lenders-recommendations | Give a list of recommended lenders' offers                | whole customer object from funnel session|
-| POST   | /api/v1/customers               | Add a new customer                                        | customer object                          |
-| POST   | /api/v1/loan_details            | Update customer information by ID                         | loan_details object & customer_id        |
+| POST   | /api/v1/customers               | Create a new customer                                     | customer object                          |
+| POST   | /api/v1/loan_details            | Create a loan details and connecting to customer info  	 | loan_details object & customer_id        |
 
 ### Data structure
 
