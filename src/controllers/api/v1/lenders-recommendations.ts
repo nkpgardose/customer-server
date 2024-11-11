@@ -1,40 +1,90 @@
 import { Request, Response, } from "express-serve-static-core";
-import { randomUUID, UUID } from "node:crypto";
+import { database } from "../../../db";
+import { fees, lenders, loanOffers } from '../../../db/schema'
+import { eq } from 'drizzle-orm';
 
 type FeePayload = {
-	id: UUID,
-	amount: number,
-	type: 'processing' | 'application'
+  id: number,
+  amount: number,
+  type: 'processing' | 'application'
 }
 
 type Lender = {
-	id: UUID,
-	name: string,
-	repayment: number,
-	interestRate: number,
-	fees: FeePayload[],
+  id: number,
+  name: string,
+  repayment: string,
+  interestRate: string,
+  fees: FeePayload[],
 }
 
 type Lenders = Lender[];
-
-const lendersResult: Lenders = [
-	{ id: randomUUID(), name: 'Lender A', repayment: 300, interestRate: 5.5, fees: [{ id: randomUUID(), amount: 10, type: 'processing' }]},
-	{ id: randomUUID(), name: 'Lender B', repayment: 290, interestRate: 5, fees: [{ id: randomUUID(), amount: 10, type: 'application' }]},
-	{ id: randomUUID(), name: 'Lender C', repayment: 310, interestRate: 6, fees: [] },
-];
 
 /**
  * GET /api/v1/lenders-recommendations
  * req:
  *  - loan_details_id
  */
-export function getLendersRecommendations(req: Request, res: Response): void {
-	res.status(200).send(lendersResult);
+export async function getLendersRecommendations(req: Request, res: Response): Promise<void> {
+  // Request payload most probably come from personal and loan details.
+  try {
+    const result = await database
+      .select()
+      .from(lenders)
+      .leftJoin(loanOffers, eq(lenders.id, loanOffers.lender_id))
+      .leftJoin(fees, eq(loanOffers.id, fees.loan_offer_id))
+
+    const formattedResult: Lenders = result.map(item => ({
+      id: item.lenders.id,
+      name: item.lenders.name,
+      repayment: `$${item.loan_offers?.repayment_value} ${item.loan_offers?.repayment_frequency}`,
+      interestRate: item.loan_offers?.interest_rate ?
+        `${(Number(item.loan_offers.interest_rate) * 100).toFixed(2)} ${item.loan_offers?.interest_frequency}` : 'N/A',
+      fees: item.fees ? [{ id: item.fees.id, amount: Number(item.fees.amount), type: item.fees.category as 'processing' | 'application' }] : []
+    }))
+
+    res.status(200).send(formattedResult);
+  } catch (error) {
+    console.error('Error inserting customer:', error);
+    res.status(500).send({
+      errors: {
+        network: {
+          message: 'Internal server error'
+        }
+      }
+    });
+  }
 }
 
 /**
  * POST /api/v1/lenders-recommendations
  */
-export function postLendersRecommendations(req: Request, res: Response): void {
-	res.status(200).send(lendersResult);
+export async function postLendersRecommendations(req: Request, res: Response): Promise<void> {
+  // Request payload most probably come from personal and loan details.
+  try {
+    const result = await database
+      .select()
+      .from(lenders)
+      .leftJoin(loanOffers, eq(lenders.id, loanOffers.lender_id))
+      .leftJoin(fees, eq(loanOffers.id, fees.loan_offer_id))
+
+    const formattedResult: Lenders = result.map(item => ({
+      id: item.lenders.id,
+      name: item.lenders.name,
+      repayment: `$${item.loan_offers?.repayment_value} ${item.loan_offers?.repayment_frequency}`,
+      interestRate: item.loan_offers?.interest_rate ?
+        `${(Number(item.loan_offers.interest_rate) * 100).toFixed(2)} ${item.loan_offers?.interest_frequency}` : 'N/A',
+      fees: item.fees ? [{ id: item.fees.id, amount: Number(item.fees.amount), type: item.fees.category as 'processing' | 'application' }] : []
+    }))
+
+    res.status(200).send(formattedResult);
+  } catch (error) {
+    console.error('Error inserting customer:', error);
+    res.status(500).send({
+      errors: {
+        network: {
+          message: 'Internal server error'
+        }
+      }
+    });
+  }
 }

@@ -1,5 +1,5 @@
 import { Request, Response, } from "express-serve-static-core";
-import { insertLoanDetailsSchema, loanDetails  } from '../../../db/schema'
+import { insertLoanDetailsSchema, loanDetails } from '../../../db/schema'
 import { database } from "../../../db";
 import { z } from 'zod';
 
@@ -17,8 +17,6 @@ export async function postLoanDetails(req: Request<{}, {}, InsertLoanDetailsInpu
 		loan_term
   } = req.body;
 
-	console.log(req.body)
-
   const loanDetailsResult = insertLoanDetailsSchema.safeParse({
 		customer_id,
 		price,
@@ -27,7 +25,6 @@ export async function postLoanDetails(req: Request<{}, {}, InsertLoanDetailsInpu
 		loan_term
   });
 
-	console.log(JSON.stringify(loanDetailsResult.error))
 
   if (!loanDetailsResult.success) {
     res.status(400).send({
