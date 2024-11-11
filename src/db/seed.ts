@@ -35,7 +35,6 @@ async function seed() {
     .returning()
 
   console.log('New Lenders created!');
-  console.log(dbResult);
 
   dbResult.map(async (item) => {
     const randomLoanOffer = insertLoanOffersSchema.parse({

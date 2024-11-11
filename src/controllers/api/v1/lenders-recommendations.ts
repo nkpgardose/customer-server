@@ -38,7 +38,7 @@ export async function getLendersRecommendations(req: Request, res: Response): Pr
       name: item.lenders.name,
       repayment: `$${item.loan_offers?.repayment_value} ${item.loan_offers?.repayment_frequency}`,
       interestRate: item.loan_offers?.interest_rate ?
-        `${(Number(item.loan_offers.interest_rate) * 100).toFixed(2)} ${item.loan_offers?.interest_frequency}` : 'N/A',
+        `${(Number(item.loan_offers.interest_rate) * 100).toFixed(2)}% ${item.loan_offers?.interest_frequency}` : 'N/A',
       fees: item.fees ? [{ id: item.fees.id, amount: Number(item.fees.amount), type: item.fees.category as 'processing' | 'application' }] : []
     }))
 
