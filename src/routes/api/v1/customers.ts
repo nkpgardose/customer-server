@@ -1,5 +1,5 @@
-import { Router } from "express";
-import { postCustomers } from "../../../controllers/api/v1/customers";
+import { Router } from 'express';
+import { postCustomers } from '../../../controllers/api/v1/customers';
 
 const router = Router();
 

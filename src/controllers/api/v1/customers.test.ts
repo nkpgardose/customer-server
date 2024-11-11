@@ -1,12 +1,12 @@
-import { Request, Response, } from "express-serve-static-core";
+import { Request, Response } from 'express-serve-static-core';
 import { postCustomers } from './customers';
-import { database } from "../../../db";
+import { database } from '../../../db';
 
 jest.mock('../../../db', () => ({
 	database: {
-		insert: jest.fn()
-	}
-}))
+		insert: jest.fn(),
+	},
+}));
 
 describe('postCustomers', () => {
 	describe('when validation failed', () => {
@@ -18,7 +18,7 @@ describe('postCustomers', () => {
 				body: {
 					first_name: 'Sample',
 					last_name: 'Tests',
-				}
+				},
 			} as Request;
 
 			const mockResponse = {
@@ -34,7 +34,7 @@ describe('postCustomers', () => {
 			jest.spyOn(console, 'error').mockImplementation(() => {});
 			jest.mocked(database.insert).mockImplementationOnce(() => {
 				throw new Error('Network error');
-			})
+			});
 
 			const status = jest.fn().mockReturnThis();
 			const send = jest.fn();
@@ -43,9 +43,9 @@ describe('postCustomers', () => {
 					first_name: 'Sample',
 					last_name: 'Tests',
 					email: 'email@sample.com',
-					employment_status: "Employed",
-					employer_name: "Sample"
-				}
+					employment_status: 'Employed',
+					employer_name: 'Sample',
+				},
 			} as Request;
 
 			const mockResponse = {
@@ -55,7 +55,7 @@ describe('postCustomers', () => {
 
 			await postCustomers(mockRequest, mockResponse);
 			expect(status).toHaveBeenCalledWith(500);
-		})
+		});
 	});
 
 	describe('when validation passes', () => {
@@ -68,11 +68,11 @@ describe('postCustomers', () => {
 						first_name: 'Sample',
 						last_name: 'Tests',
 						email: 'email@sample.com',
-						employment_status: "Employed",
-						employer_name: "Sample"
-					})
-				})
-			})
+						employment_status: 'Employed',
+						employer_name: 'Sample',
+					}),
+				}),
+			});
 			const status = jest.fn().mockReturnThis();
 			const send = jest.fn();
 			const mockRequest = {
@@ -80,9 +80,9 @@ describe('postCustomers', () => {
 					first_name: 'Sample',
 					last_name: 'Tests',
 					email: 'email@sample.com',
-					employment_status: "Employed",
-					employer_name: "Sample"
-				}
+					employment_status: 'Employed',
+					employer_name: 'Sample',
+				},
 			} as Request;
 			const mockResponse = {
 				status,

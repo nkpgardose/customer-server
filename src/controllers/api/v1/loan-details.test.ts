@@ -1,12 +1,12 @@
-import { Request, Response, } from "express-serve-static-core";
+import { Request, Response } from 'express-serve-static-core';
 import { postLoanDetails } from './loan-details';
-import { database } from "../../../db";
+import { database } from '../../../db';
 
 jest.mock('../../../db', () => ({
 	database: {
-		insert: jest.fn()
-	}
-}))
+		insert: jest.fn(),
+	},
+}));
 
 describe('postLoanDetails', () => {
 	describe('when validation failed', () => {
@@ -16,8 +16,8 @@ describe('postLoanDetails', () => {
 			const send = jest.fn();
 			const mockRequest = {
 				body: {
-					customer_id: 1
-				}
+					customer_id: 1,
+				},
 			} as Request;
 
 			const mockResponse = {
@@ -33,7 +33,7 @@ describe('postLoanDetails', () => {
 			jest.spyOn(console, 'error').mockImplementation(() => {});
 			jest.mocked(database.insert).mockImplementationOnce(() => {
 				throw new Error('Network error');
-			})
+			});
 
 			const status = jest.fn().mockReturnThis();
 			const send = jest.fn();
@@ -44,7 +44,7 @@ describe('postLoanDetails', () => {
 					deposit: 1000,
 					loan_purpose: 'Vehicle',
 					loan_term: 2,
-				}
+				},
 			} as Request;
 
 			const mockResponse = {
@@ -54,7 +54,7 @@ describe('postLoanDetails', () => {
 
 			await postLoanDetails(mockRequest, mockResponse);
 			expect(status).toHaveBeenCalledWith(500);
-		})
+		});
 	});
 
 	describe('when validation passes', () => {
@@ -69,9 +69,9 @@ describe('postLoanDetails', () => {
 						deposit: 1000,
 						loan_purpose: 'Vehicle',
 						loan_term: 2,
-					})
-				})
-			})
+					}),
+				}),
+			});
 			const status = jest.fn().mockReturnThis();
 			const send = jest.fn();
 			const mockRequest = {
@@ -81,7 +81,7 @@ describe('postLoanDetails', () => {
 					deposit: 1000,
 					loan_purpose: 'Vehicle',
 					loan_term: 2,
-				}
+				},
 			} as Request;
 			const mockResponse = {
 				status,

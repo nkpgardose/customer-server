@@ -1,6 +1,6 @@
 import 'dotenv/config';
-import { drizzle } from 'drizzle-orm/libsql'
-import { createClient } from '@libsql/client'
+import { drizzle } from 'drizzle-orm/libsql';
+import { createClient } from '@libsql/client';
 
 /**
  * @description
@@ -10,12 +10,14 @@ import { createClient } from '@libsql/client'
  * https://docs.turso.tech/local-development#sqlite
  */
 const client = createClient(
-	process.env.NODE_ENV === 'development' ? {
-		url: "file:local.db"
-	} : {
-		url: process.env.TURSO_DATABASE_URL!,
-		authToken: process.env.TURSO_AUTH_TOKEN!,
-	}
-)
+	process.env.NODE_ENV === 'development'
+		? {
+				url: 'file:local.db',
+			}
+		: {
+				url: process.env.TURSO_DATABASE_URL!,
+				authToken: process.env.TURSO_AUTH_TOKEN!,
+			},
+);
 
-export const database = drizzle(client)
+export const database = drizzle(client);

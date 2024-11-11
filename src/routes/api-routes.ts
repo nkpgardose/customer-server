@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Router } from 'express';
 import lendersRecommendationsV1 from './api/v1/lenders-recommendations';
 import customersV1 from './api/v1/customers';
 import loanDetailsV1 from './api/v1/loan-details';
