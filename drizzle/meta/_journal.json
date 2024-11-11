@@ -22,6 +22,13 @@
       "when": 1731289676794,
       "tag": "0002_cheerful_stingray",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1731297544067,
+      "tag": "0003_jazzy_firedrake",
+      "breakpoints": true
     }
   ]
 }
