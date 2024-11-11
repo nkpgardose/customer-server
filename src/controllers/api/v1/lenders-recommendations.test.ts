@@ -3,16 +3,18 @@ import { getLendersRecommendations } from './lenders-recommendations';
 import { database } from "../../../db";
 
 jest.mock('../../../db', () => ({
-	database: jest.fn()
+	database: {
+		insert: jest.fn()
+	}
 }))
 
 describe('getLendersRecommendations', () => {
   describe('when network failed', () => {
     it('returns status 500', async () => {
-      // @ts-ignore
-      jest.mocked(database).mockImplementationOnce(() => {
-        throw new Error('Network error');
-      });
+			jest.spyOn(console, 'error').mockImplementation(() => {});
+			jest.mocked(database.insert).mockImplementationOnce(() => {
+				throw new Error('Network error');
+			});
       const status = jest.fn().mockReturnThis();
       const send = jest.fn();
       const mockRequest = {} as Request;
